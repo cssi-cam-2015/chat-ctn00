@@ -2,7 +2,7 @@
 from datetime import datetime
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
-
+import random
 
 _LAST_GET_KEY_PREFIX = 'lastget'
 _LAST_POST_KEY = 'lastpost'
@@ -35,7 +35,7 @@ def ReadRemarks(user_id):
   query = Remark.query(Remark.timestamp >= start_time).order(Remark.timestamp)
   for remark in query.fetch():
     # TODO(cssi-cam-2015) Randomize the color so that each remark is different.
-    remarks.append((remark.user, remark.text, 'black'))
+    remarks.append((remark.user, remark.text, "#%03x" % random.randint(0, 0xFFF)))
 
   return remarks
 
